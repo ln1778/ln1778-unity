@@ -17,11 +17,8 @@ android {
     buildToolsVersion safeExtGet('buildToolsVersion', '33.0.0')
 
     defaultConfig {
-        applicationId "com.un3d.packs.UnityPacks"
         minSdkVersion safeExtGet('minSdkVersion', 24)
         targetSdkVersion safeExtGet('targetSdkVersion', 33)
-        versionCode 1
-        versionName "1.0"
     }
 
    

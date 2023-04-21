@@ -1,6 +1,6 @@
 {
   "name": "ln1778un3d",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": false,
   "scripts": {
     "android": "react-native run-android",
