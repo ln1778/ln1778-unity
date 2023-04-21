@@ -28,7 +28,8 @@ export default class UnityView extends React.Component<UnityViewProps> {
         super(props);
         this.state={
             loaddata:{objName:"GameObject",eventName:"LoadUrl",path:""},
-            speeddata:{objName:"GameObject",value:"0.3,1,0.2"}
+            speeddata:{objName:"GameObject",value:"0.3,1,0.2"},
+            downdata:{url:"",hash:""}
         }
     }
 
@@ -43,9 +44,9 @@ export default class UnityView extends React.Component<UnityViewProps> {
         });
     }
    public componentWillReceiveProps(nextProps: any, nextContext: any): void {
-       if(nextProps.loaddata!=this.state.objName){
-          this.setState({objName:nextProps.loaddata},()=>{
-            this.onLoad(nextProps.loaddata);
+       if(nextProps.downdata!=this.state.downdata){
+          this.setState({downdata:nextProps.downdata},()=>{
+            this.onLoad(nextProps.downdata);
           })
        }
    }
@@ -81,13 +82,22 @@ export default class UnityView extends React.Component<UnityViewProps> {
         UnityModule.postMessageToUnityManager(message);
     };
 
-    public onLoad=(params:any)=>{
+    public onLoad=(downdata:any)=>{
+
        try{
-        UnityModule.isReady().then(()=>{
-             FileManager.sendMessage(params?.objName?params.objName:"GameObject","LoadUrl",params.path?params.path:"").then((rs)=>{
-               console.log("load success!",rs);
-             })
-           })
+        FileManager.QueryOrDownload(downdata.hash,downdata.url,false).then((rs:any)=>{
+            console.log('file get',rs);
+            if(rs.file_path!=""){
+              let path=rs.file_path+',1';
+              UnityModule.isReady().then(()=>{
+                FileManager.sendMessage("GameObject","LoadUrl",path).then((rs:any)=>{
+                  console.log("load success!",rs);
+                })
+              })
+            }
+          });
+
+     
        }catch(err){
         console.log(err,"isReadyerr");
        }
