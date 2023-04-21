@@ -23,9 +23,13 @@ export default class UnityView extends React.Component<UnityViewProps> {
     }
 
     private handle: number;
-
-    constructor(props) {
+  
+    constructor(props:any) {
         super(props);
+        this.state={
+            loaddata:{objName:"GameObject",eventName:"LoadUrl",path:""},
+            speeddata:{objName:"GameObject",value:"0.3,1,0.2"}
+        }
     }
 
     public componentWillMount() {
@@ -38,7 +42,13 @@ export default class UnityView extends React.Component<UnityViewProps> {
             }
         });
     }
-
+   public componentWillReceiveProps(nextProps: any, nextContext: any): void {
+       if(nextProps.loaddata!=this.state.objName){
+          this.setState({objName:nextProps.loaddata},()=>{
+            this.onLoad(nextProps.loaddata);
+          })
+       }
+   }
     public componentWillUnmount() {
         UnityModule.removeMessageListener(this.handle);
     }
@@ -74,7 +84,7 @@ export default class UnityView extends React.Component<UnityViewProps> {
     public onLoad=(params:any)=>{
        try{
         UnityModule.isReady().then(()=>{
-             FileManager.sendMessage(params?.objname?params.objname:"GameObject",params.fn?params.fn:"LoadUrl",params.value?params.value:"").then((rs)=>{
+             FileManager.sendMessage(params?.objName?params.objName:"GameObject","LoadUrl",params.path?params.path:"").then((rs)=>{
                console.log("load success!",rs);
              })
            })
@@ -82,10 +92,11 @@ export default class UnityView extends React.Component<UnityViewProps> {
         console.log(err,"isReadyerr");
        }
     }
+
     public setSpped=(params:any)=>{
         try{
          UnityModule.isReady().then(()=>{
-              FileManager.sendMessage(params?.objname?params.objname:"GameObject",params.fn?params.fn:"SetSpeed",params.value?params.value:"0.3,1,0.2").then((rs)=>{
+              FileManager.sendMessage(params?.objName?params.objName:"GameObject","SetSpeed",params.value?params.value:"0.3,1,0.2").then((rs)=>{
                 console.log("load success!",rs);
               })
             })
