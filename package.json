@@ -1,5 +1,5 @@
 {
-  "name": "un3d",
+  "name": "ln1778un3d",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -33,5 +33,19 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "description": "un3d",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ln1778/ln1778-unity.git"
+  },
+  "keywords": [
+    "un3d"
+  ],
+  "author": "ln1778",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ln1778/ln1778-unity/issues"
+  },
+  "homepage": "https://github.com/ln1778/ln1778-unity#readme"
 }
